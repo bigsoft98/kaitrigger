@@ -59,5 +59,9 @@ ai_message = chain.invoke(
     }
 )
 
+print('\n')
+print('\n')
+print("ASK AI Response")
+print('\n')
 
 print(ai_message)
