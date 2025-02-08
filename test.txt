@@ -1,0 +1,21 @@
+AGENT: Hello, Joan speaking. How can I help you?
+CUSTOMER: Hey, hey,
+CUSTOMER: Hey, hey, hey, hey, hey, my name is uh Kevin. Yeah, yeah, uh, I just arrived in Australia. Uh, uh, I opened a, uh, account. Yeah, I, I, I, I wanna
+AGENT: Yeah.
+CUSTOMER: Yeah.
+CUSTOMER: downloaded some details for that account. Yeah, yeah. Someone can help me, that'll be great. I don't know nobody here, Australia down the.
+AGENT: Yup, sure.
+AGENT: Yeah, sure. I can guide you through that. Um, can we start with your full name and date of birth, please?
+CUSTOMER: 00, my, my, um, I have a Chinese name. My, my, my, my Chinese name is uh uh first name is uh K U.
+AGENT: Sorry sir, sorry to interrupt. Can you give me the name that's in your passport.
+CUSTOMER: Oh, OK. Yeah, yeah, yeah. It's uh first name KUN last name.
+CUSTOMER: Uh, HU, uh, date of birth, 7th of uh
+CUSTOMER: February 1978. Yeah.
+AGENT: OK. Yeah, I've got the detail. Sure, um, just so you know, this call will be recorded for training and quality management purpose. Are you happy with that?
+CUSTOMER: Oh yeah, yeah, yeah, I, yeah, fully support your bank.
+CUSTOMER: For doing anything.
+AGENT: Thank you so much for your help. OK, I'll have a look um for your account.
+AGENT: And then I'll transfer you to my colleagues.
+CUSTOMER: Oh thank you.
+AGENT: No worries. Have a good day.
+CUSTOMER: You too.
