@@ -1,0 +1,119 @@
+{
+    "InstanceId": "[instance_id]",
+    "Title": "form-title",
+    "Description": "form-description",
+    "ScoringStrategy": {
+         "Mode": "SECTION_ONLY",
+         "Status": "ENABLED"
+    },
+    "Items": [
+    {
+         "Section": {
+             "Title": "section-title-1",
+             "RefId": "section-1",
+             "Instructions": "section-instruction-1",
+             "Weight": 50,
+             "Items": [
+                 {
+                     "Question": {
+                         "Title": "question-title-1-1",
+                         "RefId": "question-1-1",
+                         "Instructions": "question-instructions",
+                         "NotApplicableEnabled": false,
+                         "QuestionType": "TEXT"
+                     }
+                 },
+                 {
+                     "Question": {
+                         "Title": "question-title-1-2",
+                         "RefId": "question-1-2",
+                         "QuestionType": "SINGLESELECT",
+                         "NotApplicableEnabled": false,
+                         "QuestionTypeProperties": {
+                             "SingleSelect": {
+                                 "Options": [
+                                     {
+                                         "RefId": "option-1-2-1",
+                                         "Text": "first-option",
+                                         "Score": 1,
+                                         "AutomaticFail": true
+                                     },
+                                     {
+                                         "RefId": "option-1-2-2",
+                                         "Text": "second-option",
+                                         "Score": 1,
+                                         "AutomaticFail": false
+                                     },
+                                     {
+                                         "RefId": "option-1-2-3",
+                                         "Text": "third-option",
+                                         "Score": 1,
+                                         "AutomaticFail": true
+                                     }
+                                 ],
+                                 "DisplayAs": "DROPDOWN",
+                                 "Automation": {
+                                     "Options": [
+                                         {
+                                             "RuleCategory": {
+                                                 "Category": "CATEGORY_LABEL",
+                                                 "Condition": "PRESENT",
+                                                 "OptionRefId": "option-1-2-2"
+                                             }
+                                         }
+                                     ],
+                                     "DefaultOptionRefId": "option-1-2-1"
+                                 }
+                             }
+                         }
+                     }
+                 }
+             ]
+         }
+     },
+     {
+         "Section": {
+             "Title": "section-title-2",
+             "RefId": "section-2",
+             "Instructions": "section-instruction-2",
+             "Weight":50,
+             "Items": [
+                 {
+                     "Question": {
+                         "Title": "question-title-2-1",
+                         "RefId": "question-2-1",
+                         "QuestionType": "TEXT",
+                         "NotApplicableEnabled": true
+                     }
+                 },
+                 {
+                     "Question": {
+                         "Title": "question-title-2-2",
+                         "RefId": "question-2-2",
+                         "QuestionType": "NUMERIC",
+                         "QuestionTypeProperties": {
+                             "Numeric": {
+                                 "MinValue": 0,
+                                 "MaxValue": 28800,
+                                 "Options": [
+                                     {
+                                         "MinValue": 0,
+                                         "MaxValue": 28800,
+                                         "Score": 1,
+                                         "AutomaticFail": false
+                                     }
+                                 ],
+                                 "Automation": {
+                                     "PropertyValue": {
+                                         "Label": "AGENT_INTERACTION_DURATION"
+                                     }
+                                 }
+                             }
+                         }
+                     }
+                 }
+             ]
+         }
+     }
+     ]
+ }

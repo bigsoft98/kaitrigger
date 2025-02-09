@@ -1,0 +1,28 @@
+{
+    "Title": "Sample Evaluation Form",
+    "Description": "This is a sample evaluation form for AWS Connect.",
+    "Items": [
+      {
+        "Section": {
+          "Title": "Section 1",
+          "RefId": "section1",
+          "Items": [
+            {
+              "Question": {
+                "Question": "What is your name?",
+                "Instruction": "Please provide your full name.",
+                "RefId": "question1"
+              }
+            },
+            {
+              "Question": {
+                "Question": "What is your age?",
+                "Instruction": "Please provide your age in years.",
+                "RefId": "question2"
+              }
+            }
+          ]
+        }
+      }
+    ]
+  }

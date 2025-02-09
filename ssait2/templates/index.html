@@ -1,0 +1,396 @@
+<!-- templates/index.html -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Contact Evaluation System</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/1.6.2/axios.min.js"></script>
+    <style>
+
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        .section {
+            margin-bottom: 30px;
+            padding: 20px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+        }
+        .form-group {
+            margin-bottom: 15px;
+        }
+        label {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: bold;
+            color: #333;
+        }
+        input {
+            width: 100%;
+            padding: 8px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            box-sizing: border-box;
+            font-size: 14px;
+        }
+        input[type="file"] {
+            padding: 4px;
+        }
+        button {
+            background-color: #007bff;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 4px;
+            cursor: pointer;
+            margin-right: 10px;
+            font-size: 14px;
+        }
+        button:hover {
+            background-color: #0056b3;
+        }
+        .preview {
+            margin-top: 15px;
+            padding: 15px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            background-color: #fff;
+        }
+        .preview h4 {
+            margin-top: 0;
+            color: #2c3e50;
+            border-bottom: 1px solid #eee;
+            padding-bottom: 10px;
+        }
+        #fileContent {
+            max-height: 300px;
+            overflow-y: auto;
+            padding: 10px;
+            background-color: #f8f9fa;
+            border: 1px solid #eee;
+            border-radius: 4px;
+            font-family: monospace;
+            white-space: pre-wrap;
+            font-size: 14px;
+            line-height: 1.5;
+        }
+        .response-section {
+            margin-top: 20px;
+            padding: 15px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            background-color: #f8f9fa;
+            display: none;
+        }
+        .response-content {
+            background-color: white;
+            padding: 15px;
+            border-radius: 4px;
+            border: 1px solid #ddd;
+            margin-top: 10px;
+            white-space: pre-wrap;
+            font-family: monospace;
+            font-size: 14px;
+            max-height: 400px;
+            overflow-y: auto;
+        }
+        .response-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 10px;
+            border-bottom: 1px solid #eee;
+            padding-bottom: 10px;
+        }
+        .close-button {
+            background-color: transparent;
+            color: #666;
+            border: none;
+            font-size: 20px;
+            cursor: pointer;
+            padding: 0 5px;
+        }
+        .close-button:hover {
+            color: #333;
+            background-color: transparent;
+        }
+        .status-badge {
+            display: inline-block;
+            padding: 4px 8px;
+            border-radius: 4px;
+            font-size: 12px;
+            font-weight: bold;
+            margin-left: 10px;
+        }
+        .status-success {
+            background-color: #d4edda;
+            color: #155724;
+        }
+        .status-error {
+            background-color: #f8d7da;
+            color: #721c24;
+        }
+        h1, h2, h3 {
+            color: #2c3e50;
+        }
+        .section-title {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+        .transcript-section {
+            margin-top: 20px;
+        }
+        .content-header {
+            background-color: #f8f9fa;
+            padding: 10px;
+            border-radius: 4px 4px 0 0;
+            border: 1px solid #ddd;
+            border-bottom: none;
+            font-weight: bold;
+        }   
+
+
+
+        /* ... Previous styles remain the same ... */
+        .questions-section {
+            margin-top: 20px;
+            padding: 15px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            background-color: #fff;
+        }
+        .question-item {
+            margin-bottom: 20px;
+            padding: 15px;
+            border: 1px solid #eee;
+            border-radius: 4px;
+            background-color: #f8f9fa;
+        }
+        .question-header {
+            font-weight: bold;
+            color: #2c3e50;
+            margin-bottom: 10px;
+        }
+        .upload-section {
+            margin-bottom: 20px;
+            padding: 15px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            background-color: #f8f9fa;
+        }
+        .questions-preview {
+            margin-top: 10px;
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            background-color: #fff;
+            max-height: 300px;
+            overflow-y: auto;
+        }
+    </style>
+</head>
+<body>
+    <h1>Contact Evaluation System</h1>
+    
+    <!-- Upload Sections -->
+    <div class="section">
+        <div class="upload-section">
+            <h3>Upload Evaluation JSON</h3>
+            <div class="form-group">
+                <label for="questionsFile">Select Evaluation Form File:</label>
+                <input type="file" id="questionsFile" accept=".json">
+            </div>
+        </div>
+
+        <div class="upload-section">
+            <h3>Upload Contact Transcript</h3>
+            <div class="form-group">
+                <label for="documentFile">Select Transcript File:</label>
+                <input type="file" id="documentFile" accept=".txt">
+                <div id="filePreview" class="preview" style="display: none;">
+                    <div class="content-header">Contact Transcript Content</div>
+                    <div id="fileContent"></div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Dynamic Questions Form -->
+        <!-- <form id="evaluationForm" style="display: none;"> -->
+            <div id="questionsContainer" class="questions-section">
+                <h3>Evaluation Questions</h3>
+                <!-- Questions will be dynamically inserted here -->
+            </div>
+            
+            
+        <!-- </form> -->
+
+        <!-- API Response Section -->
+        <div id="responseSection" class="response-section">
+            <div class="response-header">
+                <div>
+                    <h3>AI Contact Evaluation Response</h3>
+                    <span id="responseStatus" class="status-badge"></span>
+                </div>
+                <button class="close-button" onclick="closeResponse()">×</button>
+            </div>
+            <div id="responseContent" class="response-content"></div>
+        </div>
+
+        <!-- <button type="submit"> 提交 Evaluation 给 AI</button> -->
+    </div>
+
+    <script>
+        const API_URL = '/api';
+        let currentQuestions = null;
+        
+        function closeResponse() {
+            document.getElementById('responseSection').style.display = 'none';
+        }
+
+        function displayResponse(response, isError = false) {
+            const responseSection = document.getElementById('responseSection');
+            const responseContent = document.getElementById('responseContent');
+            const responseStatus = document.getElementById('responseStatus');
+            
+            const formattedResponse = JSON.stringify(response, null, 2);
+            
+            responseStatus.textContent = isError ? 'Error' : 'Success';
+            responseStatus.className = `status-badge ${isError ? 'status-error' : 'status-success'}`;
+            
+            responseContent.textContent = formattedResponse;
+            responseSection.style.display = 'block';
+            
+            responseSection.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+        }
+
+        function createQuestionFields(questions) {
+            const container = document.getElementById('questionsContainer');
+            container.innerHTML = ''; // Clear existing questions
+            
+            questions.forEach((item, index) => {
+                const questionDiv = document.createElement('div');
+                questionDiv.className = 'question-item';
+                
+                questionDiv.innerHTML = `
+
+                        <div class="form-group">
+                            <label for="question_${index}">Question ${index + 1}:</label>
+                            <input type="text" id="question_${index}" name="question_${index}" 
+                                value="${item.question}" readonly>
+                        </div>
+                        <div class="form-group">
+                            <label for="instruction_${index}">Instruction:</label>
+                            <input type="text" id="instruction_${index}" name="instruction_${index}" 
+                                value="${item.instruction}" readonly>
+                        </div>
+                        <button id="submit_${index}"
+                                    onclick="submitQuestion(event, 'question_${index}', 'instruction_${index}')">
+                                请教AI
+                        </button>                        
+
+                `;
+                
+                container.appendChild(questionDiv);
+            });
+            
+            // Show the form after questions are loaded
+            document.getElementById('evaluationForm').style.display = 'block';
+        }
+        
+        // Handle questions file upload
+        document.getElementById('questionsFile').addEventListener('change', async function(e) {
+            const file = e.target.files[0];
+            
+            if (file && file.name.endsWith('.json')) {
+                const formData = new FormData();
+                formData.append('file', file);
+                
+                try {
+                    const response = await axios.post(`${API_URL}/upload-questions`, formData);
+                    currentQuestions = response.data.content;
+                    createQuestionFields(currentQuestions);
+                    displayResponse(response.data);
+                } catch (error) {
+                    displayResponse(error.response?.data || { message: 'Unknown error' }, true);
+                }
+            }
+        });
+
+        // Handle transcript file upload
+        document.getElementById('documentFile').addEventListener('change', async function(e) {
+            const file = e.target.files[0];
+            const previewDiv = document.getElementById('filePreview');
+            const contentDiv = document.getElementById('fileContent');
+            
+            if (file && file.name.endsWith('.txt')) {
+                const formData = new FormData();
+                formData.append('file', file);
+                
+                try {
+                    const response = await axios.post(`${API_URL}/upload-text`, formData);
+                    contentDiv.textContent = response.data.content;
+                    previewDiv.style.display = 'block';
+                    previewDiv.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+                } catch (error) {
+                    displayResponse(error.response?.data || { message: 'Unknown error' }, true);
+                    previewDiv.style.display = 'none';
+                }
+            } else {
+                previewDiv.style.display = 'none';
+            }
+        });
+
+        // Handle form submission
+        // document.getElementById('evaluationForm').addEventListener('submit', async function(e) {
+        //     e.preventDefault();
+            
+        //     const formData = new FormData(this);
+            
+        //     // Add the transcript file if it exists
+        //     const transcriptFile = document.getElementById('documentFile').files[0];
+        //     if (transcriptFile) {
+        //         formData.append('transcript', transcriptFile);
+        //     }
+            
+        //     try {
+        //         const response = await axios.post(`${API_URL}/submit-evaluation`, formData);
+        //         displayResponse(response.data);
+        //     } catch (error) {
+        //         displayResponse(error.response?.data || { message: 'Unknown error' }, true);
+        //     }
+        // });
+
+
+
+        async function submitQuestion(event, question_id,instruction_id) {
+            event.preventDefault();
+            
+            const question = document.getElementById(question_id).value;
+            const instruction = document.getElementById(instruction_id).value;
+            
+            const formData = new FormData();
+      
+            formData.append('question', question);
+            formData.append('instruction', instruction);
+            
+            // Add transcript content if available
+            // if (transcriptContent) {
+            //     formData.append('transcript', transcriptContent);
+            // }
+            
+            try {
+                const response = await axios.post(`${API_URL}/ask-ai`, formData);
+                displayResponse(response.data);
+            } catch (error) {
+                displayResponse(error.response?.data || { message: 'Unknown error' }, true);
+            }
+        }
+    </script>
+</body>
+</html>
